@@ -59,7 +59,6 @@ module NetSuite
     def cached_wsdl
       cached = wsdl_cache.fetch(wsdl, nil)
       if cached.is_a? String
-        p "CACHED!!"
         cached
       elsif cached.is_a? Savon::Client
         wsdl_cache[wsdl] = cached.instance_eval { @wsdl.xml }
