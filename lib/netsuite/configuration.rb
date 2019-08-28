@@ -16,7 +16,7 @@ module NetSuite
 
     def connection(params={}, credentials={})
       client = Savon.client({
-        wsdl: cached_wsdl || wsdl,
+        wsdl: 'https://webservices.na2.netsuite.com/wsdl/v2017_2_0/netsuite.wsdl', # cached_wsdl || wsdl,
         read_timeout: read_timeout,
         open_timeout: open_timeout,
         namespaces: namespaces,
@@ -59,6 +59,7 @@ module NetSuite
     def cached_wsdl
       cached = wsdl_cache.fetch(wsdl, nil)
       if cached.is_a? String
+        p "CACHED!!"
         cached
       elsif cached.is_a? Savon::Client
         wsdl_cache[wsdl] = cached.instance_eval { @wsdl.xml }
@@ -81,7 +82,7 @@ module NetSuite
       if version
         self.api_version = version
       else
-        attributes[:api_version] ||= '2015_1'
+        attributes[:api_version] ||= '2017_2'
       end
     end
 
